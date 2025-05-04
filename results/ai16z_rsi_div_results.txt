@@ -1,0 +1,35 @@
+Backtest Results for RSI Divergence Strategy on AI16Z (AI16Z)
+Data: F:\Master_Data\market_data\ai16z\15m\ai16z_15m_20250408_to_20250415.csv
+Initial Cash: 1000000.0
+Commission: 0.001
+
+Start                                            2025-04-09 08:36:19.850000
+End                                              2025-04-16 03:21:19.850000
+Duration                                                    6 days 18:45:00
+Exposure Time [%]                                                 10.276074
+Equity Final [$]                                              1348023.66855
+Equity Peak [$]                                               1348023.66855
+Return [%]                                                        34.802367
+Buy & Hold Return [%]                                             24.074964
+Return (Ann.) [%]                                           51504962.684339
+Volatility (Ann.) [%]                                       27639871.416188
+Sharpe Ratio                                                        1.86343
+Sortino Ratio                                                           inf
+Calmar Ratio                                                17609465.795442
+Max. Drawdown [%]                                                 -2.924845
+Avg. Drawdown [%]                                                 -0.331017
+Max. Drawdown Duration                                      0 days 14:15:00
+Avg. Drawdown Duration                                      0 days 05:40:00
+# Trades                                                                 23
+Win Rate [%]                                                      95.652174
+Best Trade [%]                                                     2.566137
+Worst Trade [%]                                                   -2.272839
+Avg. Trade [%]                                                     1.306899
+Max. Trade Duration                                         0 days 01:15:00
+Avg. Trade Duration                                         0 days 00:29:00
+Profit Factor                                                     14.265021
+Expectancy [%]                                                     1.310838
+SQN                                                                7.415054
+_strategy                                             RSIDivergenceStrategy
+_equity_curve                                            Equity  Drawdow...
+_trades                          Size  EntryBar  ExitBar  ...           ...

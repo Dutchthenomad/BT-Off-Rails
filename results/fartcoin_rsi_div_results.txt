@@ -1,0 +1,35 @@
+Backtest Results for RSI Divergence Strategy on Fartcoin (FARTCOIN)
+Data: F:\Master_Data\market_data\fartcoin\15m\fartcoin_15m_20250408_to_20250415.csv
+Initial Cash: 1000000.0
+Commission: 0.001
+
+Start                                            2025-04-09 08:40:13.870000
+End                                              2025-04-16 03:25:13.870000
+Duration                                                    6 days 18:45:00
+Exposure Time [%]                                                  8.435583
+Equity Final [$]                                             1402622.766668
+Equity Peak [$]                                              1402622.766668
+Return [%]                                                        40.262277
+Buy & Hold Return [%]                                             57.573178
+Return (Ann.) [%]                                          206063896.793932
+Volatility (Ann.) [%]                                      139783693.973791
+Sharpe Ratio                                                       1.474163
+Sortino Ratio                                                           inf
+Calmar Ratio                                               184557225.329305
+Max. Drawdown [%]                                                 -1.116531
+Avg. Drawdown [%]                                                 -0.149103
+Max. Drawdown Duration                                      0 days 13:45:00
+Avg. Drawdown Duration                                      0 days 06:47:00
+# Trades                                                                 20
+Win Rate [%]                                                          100.0
+Best Trade [%]                                                     3.122685
+Worst Trade [%]                                                    0.894272
+Avg. Trade [%]                                                     1.706111
+Max. Trade Duration                                         0 days 02:15:00
+Avg. Trade Duration                                         0 days 00:27:00
+Profit Factor                                                           NaN
+Expectancy [%]                                                      1.70818
+SQN                                                               10.950298
+_strategy                                             RSIDivergenceStrategy
+_equity_curve                                            Equity  Drawdow...
+_trades                          Size  EntryBar  ExitBar  ...           ...

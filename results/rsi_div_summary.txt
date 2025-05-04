@@ -1,0 +1,18 @@
+RSI Divergence Strategy Summary Report
+Symbol Name         Return     Win Rate   Profit Factor   Sharpe     Max DD     # Trades  
+--------------------------------------------------------------------------------
+BTC    Bitcoin      0.25% 100.00% nan nan -0.17% 1
+ETH    Ethereum     42.82% 72.22% 2.14 2.51 -5.72% 90
+SOL    Solana       40.57% 65.05% 1.85 1.44 -6.32% 103
+XRP    Ripple       50.72% 70.65% 2.46 1.39 -5.15% 92
+HYPE   Hyperliquid  134.12% 80.34% 4.32 1.10 -3.46% 117
+SUI    Sui          17.72% 100.00% nan 2.37 -1.26% 14
+TRUMP  Trump        13.69% 81.25% 6.84 2.46 -2.23% 16
+FARTCOIN Fartcoin     40.26% 100.00% nan 1.47 -1.12% 20
+kPEPE  Kabosu PEPE  12.98% 76.47% 3.49 1.85 -3.23% 17
+kBONK  Kabosu BONK  15.80% 78.26% 3.18 1.38 -5.04% 23
+WIF    Dogwifhat    21.68% 80.95% 5.26 1.54 -2.41% 21
+DOGE   Dogecoin     136.48% 87.50% 6.86 3.23 -5.07% 72
+PAXG   Pax Gold     0.79% 57.14% 1.28 1.69 -2.46% 7
+AI16Z  AI16Z        34.80% 95.65% 14.27 1.86 -2.92% 23
+PNUT   Peanut       9.40% 72.22% 2.45 2.11 -2.78% 18

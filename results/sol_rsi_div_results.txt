@@ -1,0 +1,35 @@
+Backtest Results for RSI Divergence Strategy on Solana (SOL)
+Data: F:\Master_Data\market_data\sol\5m\sol_5m_supplement_full_20250329_to_20250416.csv
+Initial Cash: 1000000.0
+Commission: 0.001
+
+Start                                            2025-03-29 15:57:34.089000
+End                                              2025-04-16 03:12:34.089000
+Duration                                                   17 days 11:15:00
+Exposure Time [%]                                                 38.891097
+Equity Final [$]                                             1405738.100578
+Equity Peak [$]                                              1406405.420578
+Return [%]                                                         40.57381
+Buy & Hold Return [%]                                              1.054229
+Return (Ann.) [%]                                              56470.160274
+Volatility (Ann.) [%]                                          39129.811799
+Sharpe Ratio                                                       1.443149
+Sortino Ratio                                                   3284.856308
+Calmar Ratio                                                    8932.186062
+Max. Drawdown [%]                                                 -6.322099
+Avg. Drawdown [%]                                                  -0.65814
+Max. Drawdown Duration                                      3 days 09:45:00
+Avg. Drawdown Duration                                      0 days 05:22:00
+# Trades                                                                103
+Win Rate [%]                                                      65.048544
+Best Trade [%]                                                      2.69183
+Worst Trade [%]                                                   -1.511348
+Avg. Trade [%]                                                     0.331208
+Max. Trade Duration                                         0 days 09:05:00
+Avg. Trade Duration                                         0 days 01:30:00
+Profit Factor                                                      1.853319
+Expectancy [%]                                                      0.33734
+SQN                                                                2.972567
+_strategy                                             RSIDivergenceStrategy
+_equity_curve                                            Equity  Drawdow...
+_trades                         Size  EntryBar  ExitBar  ...            ...

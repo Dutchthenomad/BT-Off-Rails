@@ -1,0 +1,35 @@
+Backtest Results for RSI Divergence Strategy on Trump (TRUMP)
+Data: F:\Master_Data\market_data\trump\15m\trump_15m_20250408_to_20250415.csv
+Initial Cash: 1000000.0
+Commission: 0.001
+
+Start                                            2025-04-09 08:40:37.553000
+End                                              2025-04-16 03:25:37.553000
+Duration                                                    6 days 18:45:00
+Exposure Time [%]                                                 17.791411
+Equity Final [$]                                             1136925.766644
+Equity Peak [$]                                              1152946.643067
+Return [%]                                                        13.692577
+Buy & Hold Return [%]                                              4.337295
+Return (Ann.) [%]                                              20651.043687
+Volatility (Ann.) [%]                                           8384.397264
+Sharpe Ratio                                                       2.463033
+Sortino Ratio                                                   2368.324002
+Calmar Ratio                                                    9278.118553
+Max. Drawdown [%]                                                 -2.225779
+Avg. Drawdown [%]                                                 -0.280691
+Max. Drawdown Duration                                      1 days 02:15:00
+Avg. Drawdown Duration                                      0 days 03:45:00
+# Trades                                                                 16
+Win Rate [%]                                                          81.25
+Best Trade [%]                                                     2.766946
+Worst Trade [%]                                                   -1.157452
+Avg. Trade [%]                                                     0.805278
+Max. Trade Duration                                         0 days 03:30:00
+Avg. Trade Duration                                         0 days 01:34:00
+Profit Factor                                                      6.841501
+Expectancy [%]                                                     0.809124
+SQN                                                                3.385076
+_strategy                                             RSIDivergenceStrategy
+_equity_curve                                            Equity  Drawdow...
+_trades                         Size  EntryBar  ExitBar  ...            ...

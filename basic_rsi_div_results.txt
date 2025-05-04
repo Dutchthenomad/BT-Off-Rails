@@ -1,0 +1,35 @@
+Backtest Results for Basic RSI Divergence Strategy
+Data: F:\Master_Data\market_data\btc\5m\btc_5m_20240101_to_20250415.csv
+Initial Cash: 1000000.0
+Commission: 0.001
+
+Start                                            2025-03-29 15:42:53.820000
+End                                              2025-04-16 02:07:53.820000
+Duration                                                   17 days 10:25:00
+Exposure Time [%]                                                 60.832338
+Equity Final [$]                                                1239425.981
+Equity Peak [$]                                                 1244213.981
+Return [%]                                                        23.942598
+Buy & Hold Return [%]                                              2.486555
+Return (Ann.) [%]                                               4981.938441
+Volatility (Ann.) [%]                                            1575.73301
+Sharpe Ratio                                                       3.161664
+Sortino Ratio                                                    453.213393
+Calmar Ratio                                                    1073.554122
+Max. Drawdown [%]                                                 -4.640603
+Avg. Drawdown [%]                                                 -0.404045
+Max. Drawdown Duration                                      3 days 09:35:00
+Avg. Drawdown Duration                                      0 days 03:29:00
+# Trades                                                                 66
+Win Rate [%]                                                      65.151515
+Best Trade [%]                                                      1.60682
+Worst Trade [%]                                                    -1.19409
+Avg. Trade [%]                                                     0.336786
+Max. Trade Duration                                         0 days 13:10:00
+Avg. Trade Duration                                         0 days 03:47:00
+Profit Factor                                                      2.029579
+Expectancy [%]                                                      0.34138
+SQN                                                                 2.83207
+_strategy                                             RSIDivergenceStrategy
+_equity_curve                                           Equity  Drawdown...
+_trades                       Size  EntryBar  ExitBar  ...              ...

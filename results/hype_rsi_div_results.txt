@@ -1,0 +1,35 @@
+Backtest Results for RSI Divergence Strategy on Hyperliquid (HYPE)
+Data: F:\Master_Data\market_data\hype\5m\hype_5m_supplement_full_20250329_to_20250416.csv
+Initial Cash: 1000000.0
+Commission: 0.001
+
+Start                                            2025-03-29 18:23:03.430000
+End                                              2025-04-16 03:13:03.430000
+Duration                                                   17 days 08:50:00
+Exposure Time [%]                                                 21.886868
+Equity Final [$]                                             2341181.305015
+Equity Peak [$]                                              2341181.305015
+Return [%]                                                       134.118131
+Buy & Hold Return [%]                                             17.491621
+Return (Ann.) [%]                                          781232626.980569
+Volatility (Ann.) [%]                                      707118502.413867
+Sharpe Ratio                                                       1.104811
+Sortino Ratio                                              220440805.474804
+Calmar Ratio                                               226049687.297512
+Max. Drawdown [%]                                                 -3.456022
+Avg. Drawdown [%]                                                 -0.507267
+Max. Drawdown Duration                                      1 days 15:50:00
+Avg. Drawdown Duration                                      0 days 02:54:00
+# Trades                                                                117
+Win Rate [%]                                                       80.34188
+Best Trade [%]                                                     2.987487
+Worst Trade [%]                                                   -2.305518
+Avg. Trade [%]                                                     0.729709
+Max. Trade Duration                                         0 days 04:25:00
+Avg. Trade Duration                                         0 days 00:42:00
+Profit Factor                                                      4.317975
+Expectancy [%]                                                     0.734614
+SQN                                                                  8.2932
+_strategy                                             RSIDivergenceStrategy
+_equity_curve                                            Equity  Drawdow...
+_trades                          Size  EntryBar  ExitBar  ...           ...

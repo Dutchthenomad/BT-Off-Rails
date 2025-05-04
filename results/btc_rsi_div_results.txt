@@ -1,0 +1,35 @@
+Backtest Results for RSI Divergence Strategy on Bitcoin (BTC)
+Data: F:\Master_Data\market_data\btc\5m\btc_5m_supplement_early_20250415_to_20250416.csv
+Initial Cash: 1000000.0
+Commission: 0.001
+
+Start                                            2025-04-15 23:10:48.038000
+End                                              2025-04-16 02:45:48.038000
+Duration                                                    0 days 03:35:00
+Exposure Time [%]                                                 36.363636
+Equity Final [$]                                                1002510.472
+Equity Peak [$]                                                 1003014.472
+Return [%]                                                         0.251047
+Buy & Hold Return [%]                                              0.707308
+Return (Ann.) [%]                                                 37.152475
+Volatility (Ann.) [%]                                                   NaN
+Sharpe Ratio                                                            NaN
+Sortino Ratio                                                           inf
+Calmar Ratio                                                      221.72475
+Max. Drawdown [%]                                                 -0.167561
+Avg. Drawdown [%]                                                 -0.087083
+Max. Drawdown Duration                                      0 days 00:35:00
+Avg. Drawdown Duration                                      0 days 00:19:00
+# Trades                                                                  1
+Win Rate [%]                                                          100.0
+Best Trade [%]                                                     0.252935
+Worst Trade [%]                                                    0.252935
+Avg. Trade [%]                                                     0.252935
+Max. Trade Duration                                         0 days 01:15:00
+Avg. Trade Duration                                         0 days 01:15:00
+Profit Factor                                                           NaN
+Expectancy [%]                                                     0.252935
+SQN                                                                     NaN
+_strategy                                             RSIDivergenceStrategy
+_equity_curve                                           Equity  Drawdown...
+_trades                      Size  EntryBar  ExitBar  EntryPrice  ...  R...

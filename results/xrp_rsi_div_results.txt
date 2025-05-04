@@ -1,0 +1,35 @@
+Backtest Results for RSI Divergence Strategy on Ripple (XRP)
+Data: F:\Master_Data\market_data\xrp\5m\xrp_5m_supplement_full_20250329_to_20250416.csv
+Initial Cash: 1000000.0
+Commission: 0.001
+
+Start                                            2025-03-29 16:52:09.544000
+End                                              2025-04-16 03:12:09.544000
+Duration                                                   17 days 10:20:00
+Exposure Time [%]                                                 38.896634
+Equity Final [$]                                             1507218.799575
+Equity Peak [$]                                              1532859.212013
+Return [%]                                                         50.72188
+Buy & Hold Return [%]                                             -0.556984
+Return (Ann.) [%]                                             221814.137688
+Volatility (Ann.) [%]                                         159363.320872
+Sharpe Ratio                                                       1.391877
+Sortino Ratio                                                  18715.087062
+Calmar Ratio                                                    43086.98615
+Max. Drawdown [%]                                                 -5.148054
+Avg. Drawdown [%]                                                 -0.597462
+Max. Drawdown Duration                                      2 days 11:25:00
+Avg. Drawdown Duration                                      0 days 03:36:00
+# Trades                                                                 92
+Win Rate [%]                                                      70.652174
+Best Trade [%]                                                     2.868959
+Worst Trade [%]                                                   -1.465376
+Avg. Trade [%]                                                     0.446938
+Max. Trade Duration                                         0 days 14:40:00
+Avg. Trade Duration                                         0 days 01:42:00
+Profit Factor                                                      2.460354
+Expectancy [%]                                                     0.452035
+SQN                                                                 4.37378
+_strategy                                             RSIDivergenceStrategy
+_equity_curve                                            Equity  Drawdow...
+_trades                         Size  EntryBar  ExitBar  ...            ...

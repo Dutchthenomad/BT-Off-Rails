@@ -1,0 +1,35 @@
+Backtest Results for RSI Divergence Strategy on Dogecoin (DOGE)
+Data: F:\Master_Data\market_data\doge\1h\doge_1h_20250115_to_20250415.csv
+Initial Cash: 1000000.0
+Commission: 0.001
+
+Start                                            2025-01-16 13:49:54.655000
+End                                              2025-04-16 02:49:54.655000
+Duration                                                   89 days 13:00:00
+Exposure Time [%]                                                 14.365411
+Equity Final [$]                                             2364820.974344
+Equity Peak [$]                                              2384855.091647
+Return [%]                                                       136.482097
+Buy & Hold Return [%]                                            -58.556106
+Return (Ann.) [%]                                               3057.190212
+Volatility (Ann.) [%]                                            946.236014
+Sharpe Ratio                                                       3.230896
+Sortino Ratio                                                     257.42237
+Calmar Ratio                                                      603.19511
+Max. Drawdown [%]                                                 -5.068327
+Avg. Drawdown [%]                                                 -0.540522
+Max. Drawdown Duration                                      4 days 08:00:00
+Avg. Drawdown Duration                                      1 days 00:00:00
+# Trades                                                                 72
+Win Rate [%]                                                           87.5
+Best Trade [%]                                                     4.314944
+Worst Trade [%]                                                   -2.450588
+Avg. Trade [%]                                                     1.202594
+Max. Trade Duration                                         0 days 15:00:00
+Avg. Trade Duration                                         0 days 04:00:00
+Profit Factor                                                      6.857862
+Expectancy [%]                                                     1.210487
+SQN                                                                7.517383
+_strategy                                             RSIDivergenceStrategy
+_equity_curve                                            Equity  Drawdow...
+_trades                           Size  EntryBar  ExitBar  ...          ...

@@ -1,0 +1,35 @@
+Backtest Results for RSI Divergence Strategy on Dogwifhat (WIF)
+Data: F:\Master_Data\market_data\wif\15m\wif_15m_20250408_to_20250415.csv
+Initial Cash: 1000000.0
+Commission: 0.001
+
+Start                                            2025-04-09 08:38:23.491000
+End                                              2025-04-16 03:23:23.491000
+Duration                                                    6 days 18:45:00
+Exposure Time [%]                                                 17.791411
+Equity Final [$]                                               1216779.9261
+Equity Peak [$]                                                 1237775.093
+Return [%]                                                        21.677993
+Buy & Hold Return [%]                                             19.434107
+Return (Ann.) [%]                                             772223.334244
+Volatility (Ann.) [%]                                         502914.949623
+Sharpe Ratio                                                       1.535495
+Sortino Ratio                                                  68700.231825
+Calmar Ratio                                                  320307.442482
+Max. Drawdown [%]                                                 -2.410882
+Avg. Drawdown [%]                                                 -0.653929
+Max. Drawdown Duration                                      1 days 23:45:00
+Avg. Drawdown Duration                                      0 days 05:58:00
+# Trades                                                                 21
+Win Rate [%]                                                      80.952381
+Best Trade [%]                                                     4.625439
+Worst Trade [%]                                                   -1.527112
+Avg. Trade [%]                                                     0.938702
+Max. Trade Duration                                         0 days 03:00:00
+Avg. Trade Duration                                         0 days 01:08:00
+Profit Factor                                                      5.262567
+Expectancy [%]                                                     0.946921
+SQN                                                                3.250049
+_strategy                                             RSIDivergenceStrategy
+_equity_curve                                            Equity  Drawdow...
+_trades                          Size  EntryBar  ExitBar  ...           ...

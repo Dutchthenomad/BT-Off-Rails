@@ -1,0 +1,35 @@
+Backtest Results for RSI Divergence Strategy on Sui (SUI)
+Data: F:\Master_Data\market_data\sui\15m\sui_15m_20250408_to_20250415.csv
+Initial Cash: 1000000.0
+Commission: 0.001
+
+Start                                            2025-04-09 08:41:01.063000
+End                                              2025-04-16 03:26:01.063000
+Duration                                                    6 days 18:45:00
+Exposure Time [%]                                                 18.865031
+Equity Final [$]                                             1177212.867914
+Equity Peak [$]                                              1177585.218214
+Return [%]                                                        17.721287
+Buy & Hold Return [%]                                              7.779955
+Return (Ann.) [%]                                             170806.824444
+Volatility (Ann.) [%]                                          72138.654583
+Sharpe Ratio                                                       2.367757
+Sortino Ratio                                                           inf
+Calmar Ratio                                                  135893.039313
+Max. Drawdown [%]                                                 -1.256921
+Avg. Drawdown [%]                                                 -0.446581
+Max. Drawdown Duration                                      0 days 15:15:00
+Avg. Drawdown Duration                                      0 days 03:15:00
+# Trades                                                                 14
+Win Rate [%]                                                          100.0
+Best Trade [%]                                                     1.505355
+Worst Trade [%]                                                    0.876591
+Avg. Trade [%]                                                     1.172173
+Max. Trade Duration                                         0 days 06:00:00
+Avg. Trade Duration                                         0 days 01:57:00
+Profit Factor                                                           NaN
+Expectancy [%]                                                     1.172353
+SQN                                                                20.19787
+_strategy                                             RSIDivergenceStrategy
+_equity_curve                                            Equity  Drawdow...
+_trades                         Size  EntryBar  ExitBar  ...            ...

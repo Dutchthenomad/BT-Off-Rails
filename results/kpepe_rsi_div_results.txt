@@ -1,0 +1,35 @@
+Backtest Results for RSI Divergence Strategy on Kabosu PEPE (kPEPE)
+Data: F:\Master_Data\market_data\kpepe\15m\kpepe_15m_20250408_to_20250415.csv
+Initial Cash: 1000000.0
+Commission: 0.001
+
+Start                                            2025-04-09 08:39:33.844000
+End                                              2025-04-16 03:24:33.844000
+Duration                                                    6 days 18:45:00
+Exposure Time [%]                                                 15.337423
+Equity Final [$]                                             1129770.450778
+Equity Peak [$]                                               1148602.61818
+Return [%]                                                        12.977045
+Buy & Hold Return [%]                                             13.823912
+Return (Ann.) [%]                                              26062.449428
+Volatility (Ann.) [%]                                          14099.314012
+Sharpe Ratio                                                       1.848491
+Sortino Ratio                                                   1343.115168
+Calmar Ratio                                                    8070.727471
+Max. Drawdown [%]                                                 -3.229257
+Avg. Drawdown [%]                                                 -0.744956
+Max. Drawdown Duration                                      1 days 16:45:00
+Avg. Drawdown Duration                                      0 days 10:15:00
+# Trades                                                                 17
+Win Rate [%]                                                      76.470588
+Best Trade [%]                                                     1.927012
+Worst Trade [%]                                                   -1.415601
+Avg. Trade [%]                                                     0.720314
+Max. Trade Duration                                         0 days 02:15:00
+Avg. Trade Duration                                         0 days 01:14:00
+Profit Factor                                                      3.488737
+Expectancy [%]                                                     0.726625
+SQN                                                                2.592015
+_strategy                                             RSIDivergenceStrategy
+_equity_curve                                            Equity  Drawdow...
+_trades                            Size  EntryBar  ExitBar  ...         ...

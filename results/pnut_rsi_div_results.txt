@@ -1,0 +1,35 @@
+Backtest Results for RSI Divergence Strategy on Peanut (PNUT)
+Data: F:\Master_Data\market_data\pnut\15m\pnut_15m_20250408_to_20250415.csv
+Initial Cash: 1000000.0
+Commission: 0.001
+
+Start                                            2025-04-09 08:45:50.602000
+End                                              2025-04-16 03:15:50.602000
+Duration                                                    6 days 18:30:00
+Exposure Time [%]                                                 22.427035
+Equity Final [$]                                             1093972.678897
+Equity Peak [$]                                              1113660.141937
+Return [%]                                                         9.397268
+Buy & Hold Return [%]                                             -0.492372
+Return (Ann.) [%]                                               4233.103973
+Volatility (Ann.) [%]                                           2009.739584
+Sharpe Ratio                                                       2.106295
+Sortino Ratio                                                     470.57063
+Calmar Ratio                                                    1521.564416
+Max. Drawdown [%]                                                 -2.782073
+Avg. Drawdown [%]                                                 -0.674835
+Max. Drawdown Duration                                      2 days 15:45:00
+Avg. Drawdown Duration                                      0 days 10:45:00
+# Trades                                                                 18
+Win Rate [%]                                                      72.222222
+Best Trade [%]                                                     2.502571
+Worst Trade [%]                                                   -1.520215
+Avg. Trade [%]                                                     0.500223
+Max. Trade Duration                                         0 days 09:15:00
+Avg. Trade Duration                                         0 days 01:47:00
+Profit Factor                                                      2.452177
+Expectancy [%]                                                     0.506948
+SQN                                                                1.797763
+_strategy                                             RSIDivergenceStrategy
+_equity_curve                                            Equity  Drawdow...
+_trades                          Size  EntryBar  ExitBar  ...           ...

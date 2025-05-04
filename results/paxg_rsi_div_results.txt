@@ -1,0 +1,35 @@
+Backtest Results for RSI Divergence Strategy on Pax Gold (PAXG)
+Data: F:\Master_Data\market_data\paxg\15m\paxg_15m_20250408_to_20250415.csv
+Initial Cash: 1000000.0
+Commission: 0.001
+
+Start                                            2025-04-09 08:32:08.074000
+End                                              2025-04-16 03:17:08.074000
+Duration                                                    6 days 18:45:00
+Exposure Time [%]                                                 65.030675
+Equity Final [$]                                               1007871.4363
+Equity Peak [$]                                                1008056.8363
+Return [%]                                                         0.787144
+Buy & Hold Return [%]                                               7.58311
+Return (Ann.) [%]                                                 23.581318
+Volatility (Ann.) [%]                                             13.985479
+Sharpe Ratio                                                       1.686129
+Sortino Ratio                                                       2.98001
+Calmar Ratio                                                       9.595704
+Max. Drawdown [%]                                                 -2.457487
+Avg. Drawdown [%]                                                  -0.56977
+Max. Drawdown Duration                                      5 days 13:30:00
+Avg. Drawdown Duration                                      1 days 02:05:00
+# Trades                                                                  7
+Win Rate [%]                                                      57.142857
+Best Trade [%]                                                     0.964932
+Worst Trade [%]                                                   -1.168528
+Avg. Trade [%]                                                     0.112259
+Max. Trade Duration                                         1 days 12:00:00
+Avg. Trade Duration                                         0 days 14:54:00
+Profit Factor                                                      1.283751
+Expectancy [%]                                                     0.116727
+SQN                                                                0.293545
+_strategy                                             RSIDivergenceStrategy
+_equity_curve                                            Equity  Drawdow...
+_trades                      Size  EntryBar  ExitBar  EntryPrice  ...  R...

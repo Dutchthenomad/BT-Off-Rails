@@ -1,0 +1,35 @@
+Backtest Results for RSI Divergence Strategy on Ethereum (ETH)
+Data: F:\Master_Data\market_data\eth\5m\eth_5m_supplement_full_20250329_to_20250416.csv
+Initial Cash: 1000000.0
+Commission: 0.001
+
+Start                                            2025-03-29 15:46:40.390000
+End                                              2025-04-16 03:11:40.390000
+Duration                                                   17 days 11:25:00
+Exposure Time [%]                                                  51.21176
+Equity Final [$]                                               1428203.2899
+Equity Peak [$]                                                1469502.4625
+Return [%]                                                        42.820329
+Buy & Hold Return [%]                                            -13.221429
+Return (Ann.) [%]                                              95729.371463
+Volatility (Ann.) [%]                                          38105.662999
+Sharpe Ratio                                                       2.512209
+Sortino Ratio                                                   10903.61009
+Calmar Ratio                                                   16746.285932
+Max. Drawdown [%]                                                 -5.716454
+Avg. Drawdown [%]                                                 -0.460457
+Max. Drawdown Duration                                      3 days 20:00:00
+Avg. Drawdown Duration                                      0 days 03:21:00
+# Trades                                                                 90
+Win Rate [%]                                                      72.222222
+Best Trade [%]                                                     1.677951
+Worst Trade [%]                                                   -3.940966
+Avg. Trade [%]                                                     0.397106
+Max. Trade Duration                                         0 days 15:25:00
+Avg. Trade Duration                                         0 days 02:19:00
+Profit Factor                                                      2.143019
+Expectancy [%]                                                     0.403191
+SQN                                                                3.060699
+_strategy                                             RSIDivergenceStrategy
+_equity_curve                                            Equity  Drawdow...
+_trades                       Size  EntryBar  ExitBar  ...              ...

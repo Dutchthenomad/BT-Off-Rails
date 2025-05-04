@@ -1,0 +1,35 @@
+Backtest Results for RSI Divergence Strategy on Kabosu BONK (kBONK)
+Data: F:\Master_Data\market_data\kbonk\15m\kbonk_15m_20250408_to_20250415.csv
+Initial Cash: 1000000.0
+Commission: 0.001
+
+Start                                            2025-04-09 08:37:29.735000
+End                                              2025-04-16 03:22:29.735000
+Duration                                                    6 days 18:45:00
+Exposure Time [%]                                                 16.104294
+Equity Final [$]                                             1157986.163095
+Equity Peak [$]                                              1176427.400651
+Return [%]                                                        15.798616
+Buy & Hold Return [%]                                               23.1171
+Return (Ann.) [%]                                              36741.220643
+Volatility (Ann.) [%]                                          26647.052514
+Sharpe Ratio                                                        1.37881
+Sortino Ratio                                                   1460.684319
+Calmar Ratio                                                    7289.666942
+Max. Drawdown [%]                                                 -5.040178
+Avg. Drawdown [%]                                                 -0.624531
+Max. Drawdown Duration                                      1 days 07:30:00
+Avg. Drawdown Duration                                      0 days 05:48:00
+# Trades                                                                 23
+Win Rate [%]                                                       78.26087
+Best Trade [%]                                                     2.119998
+Worst Trade [%]                                                   -1.571248
+Avg. Trade [%]                                                     0.639788
+Max. Trade Duration                                         0 days 03:00:00
+Avg. Trade Duration                                         0 days 00:54:00
+Profit Factor                                                      3.180284
+Expectancy [%]                                                     0.646026
+SQN                                                                 2.68308
+_strategy                                             RSIDivergenceStrategy
+_equity_curve                                            Equity  Drawdow...
+_trades                            Size  EntryBar  ExitBar  ...         ...
