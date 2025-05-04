@@ -5,43 +5,27 @@ import logging
 from scipy.signal import argrelextrema
 import os
 import glob
+import argparse
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s [%(levelname)s] %(message)s')
 
-# --- Configuration ---
-INITIAL_CASH = 1000000.0  # Initial cash for each cryptocurrency
-COMMISSION_RATE = 0.001  # 0.1% commission rate
-RESULTS_DIR = "results"  # Directory to store results
+# --- Default Configuration --- (Will be overridden by args)
+_DEFAULT_INITIAL_CASH = 1000000.0
+_DEFAULT_COMMISSION_RATE = 0.001
+_DEFAULT_RESULTS_DIR = "results"
+_DEFAULT_DATA_DIR = "data" 
+_DEFAULT_FILENAME_PATTERN = "{symbol}USDT_1d.csv" 
 
-# --- Strategy Parameters ---
-RSI_LENGTH = 6  # Optimized value
-ATR_LENGTH = 6  # Optimized value
-ATR_MULTIPLIER = 1.1  # Optimized value
-PROFIT_TARGET_PCT = 0.01  # Optimized value
-STOP_LOSS_PCT = 0.008  # Optimized value
-SWING_WINDOW = 3  # Optimized value
+# --- Default Strategy Parameters --- (Will be overridden by args)
+_DEFAULT_RSI_LENGTH = 6
+_DEFAULT_ATR_LENGTH = 6
+_DEFAULT_ATR_MULTIPLIER = 1.1
+_DEFAULT_PROFIT_TARGET_PCT = 0.01
+_DEFAULT_STOP_LOSS_PCT = 0.008
+_DEFAULT_SWING_WINDOW = 3
 
-# --- Cryptocurrencies to Test ---
-CRYPTOS = [
-    {"name": "Bitcoin", "symbol": "BTC", "emoji": "🪙"},
-    {"name": "Ethereum", "symbol": "ETH", "emoji": "💠"},
-    {"name": "Solana", "symbol": "SOL", "emoji": "😎"},
-    {"name": "Ripple", "symbol": "XRP", "emoji": "🌊"},
-    {"name": "Hyperliquid", "symbol": "HYPE", "emoji": "🔥"},
-    {"name": "Sui", "symbol": "SUI", "emoji": "💧"},
-    {"name": "Trump", "symbol": "TRUMP", "emoji": "🇺🇸"},
-    {"name": "Fartcoin", "symbol": "FARTCOIN", "emoji": "💨"},
-    {"name": "Kabosu PEPE", "symbol": "kPEPE", "emoji": "🐸"},
-    {"name": "Kabosu BONK", "symbol": "kBONK", "emoji": "🔨"},
-    {"name": "Dogwifhat", "symbol": "WIF", "emoji": "🐶"},
-    {"name": "Dogecoin", "symbol": "DOGE", "emoji": "🐕"},
-    {"name": "Pax Gold", "symbol": "PAXG", "emoji": "🥇"},
-    {"name": "AI16Z", "symbol": "AI16Z", "emoji": "🤖"},
-    {"name": "Peanut", "symbol": "PNUT", "emoji": "🥜"}
-]
-
-# --- RSI Calculation ---
+# --- RSI Calculation --- (Accepts length parameter)
 def calculate_rsi(prices, length=14):
     """Calculate RSI indicator"""
     # Convert to Series if numpy array is passed
@@ -66,7 +50,7 @@ def calculate_rsi(prices, length=14):
     rsi = 100 - (100 / (1 + rs))
     return rsi
 
-# --- ATR Calculation ---
+# --- ATR Calculation --- (Accepts length parameter)
 def calculate_atr(high, low, close, length=14):
     """Calculate Average True Range"""
     # Calculate True Range
@@ -77,18 +61,23 @@ def calculate_atr(high, low, close, length=14):
     atr = tr.rolling(window=length).mean()
     return atr
 
-# --- Find Local Extrema ---
+# --- Find Local Extrema --- (Accepts order parameter)
 def find_local_extrema(series, order=5, mode='max'):
     """Find local maxima or minima in a series"""
-    if mode == 'max':
-        idx = argrelextrema(series.values, np.greater_equal, order=order)[0]
-    else:
-        idx = argrelextrema(series.values, np.less_equal, order=order)[0]
-    extrema = np.zeros(series.shape, dtype=bool)
-    extrema[idx] = True
-    return pd.Series(extrema, index=series.index)
+    try:
+        if mode == 'max':
+            idx = argrelextrema(series.values, np.greater_equal, order=order)[0]
+        else:
+            idx = argrelextrema(series.values, np.less_equal, order=order)[0]
+        extrema = np.zeros(series.shape, dtype=bool)
+        extrema[idx] = True
+        return pd.Series(extrema, index=series.index)
+    except Exception as e:
+        logging.error(f"Error finding local extrema: {e}")
+        # Return a series of False if error occurs
+        return pd.Series(False, index=series.index)
 
-# --- Load and Prepare Data ---
+# --- Load and Prepare Data --- (Remains largely the same)
 def load_data(file_path):
     """Load data from CSV file"""
     logging.info(f"Loading data from {file_path}")
@@ -143,33 +132,33 @@ def load_data(file_path):
         logging.error(f"Error loading data: {e}")
         raise
 
-# --- Prepare Data for Backtesting ---
-def prepare_data(df):
-    """Calculate indicators and detect divergences"""
+# --- Prepare Data for Backtesting --- (Accepts parameters)
+def prepare_data(df, rsi_length, atr_length, swing_window):
+    """Calculate indicators and detect divergences using provided parameters"""
     logging.info("Preparing data for backtesting...")
     
     # Calculate RSI
-    df['RSI'] = calculate_rsi(df['Close'], length=RSI_LENGTH)
+    df['RSI'] = calculate_rsi(df['Close'], length=rsi_length)
     
     # Calculate ATR
-    df['ATR'] = calculate_atr(df['High'], df['Low'], df['Close'], length=ATR_LENGTH)
+    df['ATR'] = calculate_atr(df['High'], df['Low'], df['Close'], length=atr_length)
     
     # Find local extrema
-    df['local_max'] = find_local_extrema(df['Close'], order=SWING_WINDOW, mode='max')
-    df['local_min'] = find_local_extrema(df['Close'], order=SWING_WINDOW, mode='min')
-    df['rsi_local_max'] = find_local_extrema(df['RSI'], order=SWING_WINDOW, mode='max')
-    df['rsi_local_min'] = find_local_extrema(df['RSI'], order=SWING_WINDOW, mode='min')
+    df['local_max'] = find_local_extrema(df['Close'], order=swing_window, mode='max')
+    df['local_min'] = find_local_extrema(df['Close'], order=swing_window, mode='min')
+    df['rsi_local_max'] = find_local_extrema(df['RSI'], order=swing_window, mode='max')
+    df['rsi_local_min'] = find_local_extrema(df['RSI'], order=swing_window, mode='min')
     
     # Initialize divergence columns
     df['bullish_div'] = False
     df['bearish_div'] = False
     
     # Log the number of extrema points found
-    logging.info(f"Found {df['local_max'].sum()} price maxima and {df['local_min'].sum()} price minima")
-    logging.info(f"Found {df['rsi_local_max'].sum()} RSI maxima and {df['rsi_local_min'].sum()} RSI minima")
+    logging.info(f"Found {df['local_max'].sum()} price maxima and {df['local_min'].sum()} price minima using swing window {swing_window}")
+    logging.info(f"Found {df['rsi_local_max'].sum()} RSI maxima and {df['rsi_local_min'].sum()} RSI minima using swing window {swing_window}")
     
     # Detect divergences
-    detect_divergences(df)
+    detect_divergences(df, swing_window) # Pass swing_window
     
     # Drop rows with NaN values from indicator calculations
     df.dropna(inplace=True)
@@ -177,269 +166,298 @@ def prepare_data(df):
     logging.info(f"Data preparation complete. Found {df['bullish_div'].sum()} bullish and {df['bearish_div'].sum()} bearish divergences")
     return df
 
-# --- Detect Divergences ---
-def detect_divergences(df):
+# --- Detect Divergences --- (Accepts swing_window)
+def detect_divergences(df, swing_window):
     """Detect bullish and bearish divergences"""
     logging.info("Detecting divergences...")
+    search_window = swing_window * 5 # Look back a reasonable window
     
     # Loop through each bar
-    for i in range(SWING_WINDOW, len(df) - SWING_WINDOW):
+    for i in range(swing_window, len(df) - swing_window):
         # Check for bullish divergence (price makes lower low, RSI makes higher low)
         if df.iloc[i]['local_min']:
-            # Find previous price minimum
-            prev_mins = np.where(df.iloc[max(0, i-20):i]['local_min'].values)[0]
-            if len(prev_mins) > 0:
-                prev_price_idx = max(0, i-20) + prev_mins[-1]
+            # Find previous price minimum within search window
+            prev_mins_indices = np.where(df.iloc[max(0, i-search_window):i]['local_min'].values)[0]
+            if len(prev_mins_indices) > 0:
+                prev_price_idx = max(0, i-search_window) + prev_mins_indices[-1]
                 
                 # Check if current price is lower than previous
-                if df.iloc[i]['Close'] < df.iloc[prev_price_idx]['Close']:
+                if df.iloc[i]['Low'] < df.iloc[prev_price_idx]['Low']:
                     # Find corresponding RSI values
                     curr_rsi = df.iloc[i]['RSI']
                     prev_rsi = df.iloc[prev_price_idx]['RSI']
                     
                     # Check if RSI is making higher low (bullish divergence)
                     if curr_rsi > prev_rsi:
-                        df.loc[df.index[i], 'bullish_div'] = True
-        
+                        df.iloc[i, df.columns.get_loc('bullish_div')] = True
+                        # logging.debug(f"Bullish divergence detected at index {i} (Price {df.iloc[i]['Close']:.2f} < {df.iloc[prev_price_idx]['Close']:.2f}, RSI {curr_rsi:.2f} > {prev_rsi:.2f})")
+
         # Check for bearish divergence (price makes higher high, RSI makes lower high)
         if df.iloc[i]['local_max']:
-            # Find previous price maximum
-            prev_maxs = np.where(df.iloc[max(0, i-20):i]['local_max'].values)[0]
-            if len(prev_maxs) > 0:
-                prev_price_idx = max(0, i-20) + prev_maxs[-1]
+            # Find previous price maximum within search window
+            prev_max_indices = np.where(df.iloc[max(0, i-search_window):i]['local_max'].values)[0]
+            if len(prev_max_indices) > 0:
+                prev_price_idx = max(0, i-search_window) + prev_max_indices[-1]
                 
                 # Check if current price is higher than previous
-                if df.iloc[i]['Close'] > df.iloc[prev_price_idx]['Close']:
+                if df.iloc[i]['High'] > df.iloc[prev_price_idx]['High']:
                     # Find corresponding RSI values
                     curr_rsi = df.iloc[i]['RSI']
                     prev_rsi = df.iloc[prev_price_idx]['RSI']
                     
                     # Check if RSI is making lower high (bearish divergence)
                     if curr_rsi < prev_rsi:
-                        df.loc[df.index[i], 'bearish_div'] = True
+                        df.iloc[i, df.columns.get_loc('bearish_div')] = True
+                        # logging.debug(f"Bearish divergence detected at index {i} (Price {df.iloc[i]['Close']:.2f} > {df.iloc[prev_price_idx]['Close']:.2f}, RSI {curr_rsi:.2f} < {prev_rsi:.2f})")
 
-# --- RSI Divergence Strategy ---
+# --- RSI Divergence Strategy --- (Uses parameters passed by Backtest)
 class RSIDivergenceStrategy(Strategy):
-    """RSI Divergence Trading Strategy"""
-    
+    """ RSI Divergence Trading Strategy using parameters """
+    # Define parameters that Backtest will pass to the strategy
+    rsi_length = _DEFAULT_RSI_LENGTH
+    atr_length = _DEFAULT_ATR_LENGTH
+    atr_multiplier = _DEFAULT_ATR_MULTIPLIER
+    profit_target_pct = _DEFAULT_PROFIT_TARGET_PCT
+    stop_loss_pct = _DEFAULT_STOP_LOSS_PCT
+    # swing_window is used in prepare_data, not directly here
+
     def init(self):
-        # Store indicators for the strategy
-        self.rsi = self.I(lambda x: x, self.data.RSI)
-        self.atr = self.I(lambda x: x, self.data.ATR)
-        self.bullish_div = self.I(lambda x: x, self.data.bullish_div)
-        self.bearish_div = self.I(lambda x: x, self.data.bearish_div)
-        
-        # Position management variables
-        self.entry_price = None
-        self.stop_loss = None
-        self.take_profit = None
-    
+        # Access parameters passed by Backtest
+        self.rsi = self.I(calculate_rsi, self.data.Close, length=self.rsi_length)
+        self.atr = self.I(calculate_atr, self.data.High, self.data.Low, self.data.Close, length=self.atr_length)
+        # Access pre-calculated divergences from the dataframe passed to Backtest
+        self.bullish_div = self.data.bullish_div
+        self.bearish_div = self.data.bearish_div
+
     def next(self):
-        price = self.data.Close[-1]
-        atr_val = self.atr[-1]
-        
-        # Log current price and indicators for debugging only when divergences are detected
-        if self.bullish_div[-1] or self.bearish_div[-1]:
-            logging.info(f"Price={price:.2f}, RSI={self.rsi[-1]:.2f}, ATR={atr_val:.2f}")
-            logging.info(f"Bullish div: {self.bullish_div[-1]}, Bearish div: {self.bearish_div[-1]}")
-        
-        # Manage existing positions
+        # Check for open positions
         if self.position:
-            # Check stop loss and take profit for long positions
+            # --- Profit Target & Stop Loss for Long --- 
             if self.position.is_long:
-                if price <= self.stop_loss or price >= self.take_profit:
-                    self.position.close()
-                    logging.info(f"Closed LONG position at {self.data.index[-1]}, price={price:.2f}")
-            
-            # Check stop loss and take profit for short positions
-            elif self.position.is_short:
-                if price >= self.stop_loss or price <= self.take_profit:
-                    self.position.close()
-                    logging.info(f"Closed SHORT position at {self.data.index[-1]}, price={price:.2f}")
-            
-            return
-        
-        # Entry logic
+                # Simple % based TP/SL
+                if self.data.Close[-1] >= self.position.entry_price * (1 + self.profit_target_pct):
+                    self.position.close() # Take profit
+                elif self.data.Close[-1] <= self.position.entry_price * (1 - self.stop_loss_pct):
+                    self.position.close() # Stop loss
+            # --- Profit Target & Stop Loss for Short --- 
+            # Note: Shorting logic can be added here if desired
+            # elif self.position.is_short:
+                # if self.data.Close[-1] <= self.position.entry_price * (1 - self.profit_target_pct):
+                #     self.position.close() # Take profit
+                # elif self.data.Close[-1] >= self.position.entry_price * (1 + self.stop_loss_pct):
+                #     self.position.close() # Stop loss
+            return # Don't enter new position if one is open
+
+        # --- Entry Conditions ---
+        # Bullish divergence detected
         if self.bullish_div[-1]:
-            # Long entry on bullish divergence
-            self.entry_price = price
-            self.stop_loss = price * (1 - STOP_LOSS_PCT)
-            self.take_profit = price * (1 + PROFIT_TARGET_PCT)
-            
-            # Enter long position
+            # Calculate dynamic stop loss based on ATR 
+            # sl = self.data.Close[-1] - self.atr[-1] * self.atr_multiplier
+            # Calculate dynamic take profit 
+            # tp = self.data.Close[-1] + (self.data.Close[-1] - sl) * 2 # Example: 2:1 Risk/Reward
+            # Buy with calculated SL/TP
+            # self.buy(sl=sl, tp=tp)
+            # Using simpler % based SL for consistency with current params
             self.buy()
-            logging.info(f"LONG entry at {self.data.index[-1]}, price={price:.2f}, stop={self.stop_loss:.2f}, target={self.take_profit:.2f}")
-        
-        elif self.bearish_div[-1]:
-            # Short entry on bearish divergence
-            self.entry_price = price
-            self.stop_loss = price * (1 + STOP_LOSS_PCT)
-            self.take_profit = price * (1 - PROFIT_TARGET_PCT)
-            
-            # Enter short position
-            self.sell()
-            logging.info(f"SHORT entry at {self.data.index[-1]}, price={price:.2f}, stop={self.stop_loss:.2f}, target={self.take_profit:.2f}")
 
-# --- Find Data Files ---
-def find_data_files():
-    """Find data files for each cryptocurrency"""
-    base_dir = r'F:\Master_Data\market_data'
-    crypto_files = {}
+        # Bearish divergence detected (Example for adding shorting later)
+        # elif self.bearish_div[-1]:
+            # sl = self.data.Close[-1] + self.atr[-1] * self.atr_multiplier
+            # tp = self.data.Close[-1] - (sl - self.data.Close[-1]) * 2
+            # self.sell(sl=sl, tp=tp)
+            # pass # Currently long-only focus
+
+# --- Find Data Files --- (Uses args)
+def find_data_files(data_dir, symbols, filename_pattern):
+    """Find data files for the specified cryptocurrencies in the data directory."""
+    data_files = {}
+    logging.info(f"Looking for data files in '{data_dir}' for symbols: {', '.join(symbols)}")
+    logging.info(f"Using filename pattern: '{filename_pattern}'")
     
-    for crypto in CRYPTOS:
-        symbol = crypto['symbol'].lower()
-        
-        # Check if directory exists
-        crypto_dir = os.path.join(base_dir, symbol)
-        if not os.path.exists(crypto_dir):
-            logging.warning(f"No directory found for {crypto['name']} at {crypto_dir}")
-            continue
-        
-        # Check for 5m data
-        data_dir_5m = os.path.join(crypto_dir, '5m')
-        if os.path.exists(data_dir_5m):
-            # Try different file naming patterns
-            patterns = [
-                f'{symbol}_5m_*.csv',  # Standard pattern
-                f'*{symbol}*5m*.csv',   # Alternative pattern
-                '*.csv'                # Any CSV file
-            ]
+    found_symbols = set()
+    missing_symbols = set(symbols)
+    
+    # Attempt to find files using the pattern
+    for symbol in symbols:
+        try:
+            # Format the pattern with the current symbol
+            pattern = os.path.join(data_dir, filename_pattern.format(symbol=symbol))
+            files = glob.glob(pattern)
             
-            found = False
-            for pattern in patterns:
-                files = glob.glob(os.path.join(data_dir_5m, pattern))
-                if files:
-                    # Sort files by modification time (newest first)
-                    files.sort(key=os.path.getmtime, reverse=True)
-                    crypto_files[symbol] = files[0]
-                    logging.info(f"Found data file for {crypto['name']}: {os.path.basename(files[0])}")
-                    found = True
-                    break
-            
-            if not found:
-                logging.warning(f"No data files found for {crypto['name']} in {data_dir_5m}")
-        else:
-            # Check for data in other timeframes
-            timeframes = ['1m', '15m', '1h', '4h', '1d']
-            for tf in timeframes:
-                data_dir_alt = os.path.join(crypto_dir, tf)
-                if os.path.exists(data_dir_alt):
-                    files = glob.glob(os.path.join(data_dir_alt, f'*{symbol}*{tf}*.csv'))
-                    if files:
-                        files.sort(key=os.path.getmtime, reverse=True)
-                        crypto_files[symbol] = files[0]
-                        logging.info(f"Found alternative timeframe data for {crypto['name']}: {os.path.basename(files[0])}")
-                        break
+            if files:
+                # Use the first file found if multiple match (e.g., different date ranges)
+                # Consider adding logic to select the most appropriate file if needed
+                data_file_path = files[0] 
+                data_files[symbol] = data_file_path
+                found_symbols.add(symbol)
+                missing_symbols.remove(symbol)
+                logging.info(f"  Found: {data_file_path} for {symbol}")
             else:
-                logging.warning(f"No data files found for {crypto['name']} in any timeframe")
-    
-    return crypto_files
+                logging.warning(f"  Could not find data file for {symbol} using pattern: {pattern}")
+        except Exception as e:
+             logging.error(f"Error processing symbol {symbol} with pattern '{filename_pattern}': {e}")
 
-# --- Run Backtest for Single Cryptocurrency ---
-def run_backtest(crypto, data_file):
-    """Run backtest for a single cryptocurrency"""
+    if not data_files:
+        logging.error(f"No data files found in '{data_dir}' for the specified symbols and pattern.")
+    elif missing_symbols:
+        logging.warning(f"Could not find data for symbols: {', '.join(missing_symbols)}")
+        
+    return data_files
+
+# --- Run Backtest for Single Cryptocurrency --- (Uses args)
+def run_backtest(symbol, data_file, results_dir, initial_cash, commission_rate, strategy_params):
+    """Run backtest for a single cryptocurrency."""
+    logging.info(f"--- Starting backtest for {symbol} --- ")
+    
     try:
-        # Create results directory if it doesn't exist
-        if not os.path.exists(RESULTS_DIR):
-            os.makedirs(RESULTS_DIR)
-        
-        # Results filename
-        results_file = os.path.join(RESULTS_DIR, f"{crypto['symbol'].lower()}_rsi_div_results.txt")
-        
-        # Load and prepare data
+        # Load data
         data = load_data(data_file)
-        data = prepare_data(data)
+        if data is None or data.empty:
+            logging.error(f"No data loaded for {symbol}, skipping backtest.")
+            return None
         
-        # Run backtest
-        logging.info(f"Running backtest for {crypto['name']} ({crypto['symbol']})...")
-        bt = Backtest(data, RSIDivergenceStrategy, cash=INITIAL_CASH, commission=COMMISSION_RATE)
-        stats = bt.run()
+        # Prepare data with specific parameters
+        data = prepare_data(data,
+                            rsi_length=strategy_params['rsi_length'],
+                            atr_length=strategy_params['atr_length'],
+                            swing_window=strategy_params['swing_window'])
         
-        # Print results
-        print(f"\n--- {crypto['emoji']} {crypto['name']} ({crypto['symbol']}) Backtest Results ---")
-        print(f"Return: {stats['Return [%]']:.2f}%")
-        print(f"Win Rate: {stats['Win Rate [%]']:.2f}%")
-        print(f"Profit Factor: {stats['Profit Factor']:.2f}")
-        print(f"Sharpe Ratio: {stats['Sharpe Ratio']:.2f}")
-        print(f"Max Drawdown: {stats['Max. Drawdown [%]']:.2f}%")
-        print(f"# Trades: {stats['# Trades']}")
-        
-        # Save detailed results to file
-        with open(results_file, "w") as f:
-            f.write(f"Backtest Results for RSI Divergence Strategy on {crypto['name']} ({crypto['symbol']})\n")
-            f.write(f"Data: {data_file}\n")
-            f.write(f"Initial Cash: {INITIAL_CASH}\n")
-            f.write(f"Commission: {COMMISSION_RATE}\n\n")
-            f.write(stats.to_string())
-        
-        logging.info(f"Results saved to {results_file}")
-        
-        # Skip plotting to avoid errors
-        logging.info("Skipping plot generation to avoid errors")
-        
-        return {
-            "symbol": crypto['symbol'],
-            "name": crypto['name'],
-            "emoji": crypto['emoji'],
-            "return": stats['Return [%]'],
-            "win_rate": stats['Win Rate [%]'],
-            "profit_factor": stats['Profit Factor'],
-            "sharpe": stats['Sharpe Ratio'],
-            "max_drawdown": stats['Max. Drawdown [%]'],
-            "num_trades": stats['# Trades']
-        }
-    
-    except Exception as e:
-        logging.error(f"Error running backtest for {crypto['symbol']}: {e}")
-        return {
-            "symbol": crypto['symbol'],
-            "name": crypto['name'],
-            "emoji": crypto['emoji'],
-            "error": str(e)
-        }
+        if data.empty:
+             logging.error(f"Data empty after preparation for {symbol}, skipping backtest.")
+             return None
 
-# --- Main Function ---
-def main():
-    try:
-        # Find data files for each cryptocurrency
-        crypto_files = find_data_files()
+        # Create Backtest instance
+        # Pass strategy parameters directly to Backtest
+        bt = Backtest(data,
+                      RSIDivergenceStrategy,
+                      cash=initial_cash,
+                      commission=commission_rate,
+                      trade_on_close=True,
+                      exclusive_orders=True)
         
-        # Run backtest for each cryptocurrency
-        results = []
-        for crypto in CRYPTOS:
-            symbol = crypto['symbol'].lower()
-            if symbol in crypto_files:
-                result = run_backtest(crypto, crypto_files[symbol])
-                results.append(result)
+        # Run the backtest, passing strategy parameters
+        stats = bt.run(**strategy_params) # Pass params like rsi_length, etc.
         
-        # Generate summary report
-        print("\n--- 📊 RSI Divergence Strategy Summary Report ---")
-        print(f"{'Symbol':<6} {'Name':<12} {'Return':<10} {'Win Rate':<10} {'Profit Factor':<15} {'Sharpe':<10} {'Max DD':<10} {'# Trades':<10}")
-        print("-" * 80)
+        logging.info(f"Backtest for {symbol} completed.")
+        print(f"\nResults for {symbol}:\n{stats}")
         
-        for result in results:
-            if 'error' in result:
-                print(f"{result['symbol']:<6} {result['name']:<12} ERROR: {result['error']}")
-            else:
-                print(f"{result['symbol']:<6} {result['name']:<12} {result['return']:.2f}% {result['win_rate']:.2f}% {result['profit_factor']:.2f} {result['sharpe']:.2f} {result['max_drawdown']:.2f}% {result['num_trades']}")
+        # Ensure results directory exists
+        os.makedirs(results_dir, exist_ok=True)
         
-        # Save summary to file
-        summary_file = os.path.join(RESULTS_DIR, "rsi_div_summary.txt")
-        with open(summary_file, "w") as f:
-            f.write("RSI Divergence Strategy Summary Report\n")
-            f.write(f"{'Symbol':<6} {'Name':<12} {'Return':<10} {'Win Rate':<10} {'Profit Factor':<15} {'Sharpe':<10} {'Max DD':<10} {'# Trades':<10}\n")
-            f.write("-" * 80 + "\n")
+        # Save results and plot
+        results_filename_base = os.path.join(results_dir, f"{symbol}_rsi_div")
+        stats_file = f"{results_filename_base}_results.txt"
+        plot_file = f"{results_filename_base}_plot.html"
+        trades_file = f"{results_filename_base}_trades.csv"
+        
+        with open(stats_file, 'w') as f:
+            f.write(str(stats))
+        logging.info(f"Stats saved to {stats_file}")
+        
+        try:
+            bt.plot(filename=plot_file, open_browser=False)
+            logging.info(f"Plot saved to {plot_file}")
+        except Exception as plot_error:
+            logging.error(f"Could not generate plot for {symbol}: {plot_error}")
+        
+        # Save trades
+        trades_df = stats['_trades']
+        if not trades_df.empty:
+            trades_df.to_csv(trades_file)
+            logging.info(f"Trades saved to {trades_file}")
+        else:
+            logging.info(f"No trades executed for {symbol}.")
             
-            for result in results:
-                if 'error' in result:
-                    f.write(f"{result['symbol']:<6} {result['name']:<12} ERROR: {result['error']}\n")
-                else:
-                    f.write(f"{result['symbol']:<6} {result['name']:<12} {result['return']:.2f}% {result['win_rate']:.2f}% {result['profit_factor']:.2f} {result['sharpe']:.2f} {result['max_drawdown']:.2f}% {result['num_trades']}\n")
-        
-        logging.info(f"Summary report saved to {summary_file}")
+        return stats
         
     except Exception as e:
-        logging.error(f"Error in main function: {e}")
+        logging.error(f"Error running backtest for {symbol}: {e}")
+        return None
+
+# --- Main Function --- (Parses arguments)
+def main():
+    parser = argparse.ArgumentParser(description="Run RSI Divergence backtests on specified cryptocurrency data.")
+    
+    # --- File/Directory Arguments ---
+    parser.add_argument('--data-dir', type=str, default=_DEFAULT_DATA_DIR,
+                        help=f"Directory containing the cryptocurrency data CSV files. Default: '{_DEFAULT_DATA_DIR}'")
+    parser.add_argument('--results-dir', type=str, default=_DEFAULT_RESULTS_DIR,
+                        help=f"Directory to save backtest results and plots. Default: '{_DEFAULT_RESULTS_DIR}'")
+    parser.add_argument('--filename-pattern', type=str, default=_DEFAULT_FILENAME_PATTERN,
+                        help=f"Pattern for data filenames, use {{symbol}} as placeholder. Default: '{_DEFAULT_FILENAME_PATTERN}'")
+
+    # --- Symbol Argument ---
+    parser.add_argument('--symbols', nargs='+', required=True,
+                        help="List of cryptocurrency symbols to backtest (e.g., BTC ETH SOL).")
+
+    # --- Backtest Configuration Arguments ---
+    parser.add_argument('--initial-cash', type=float, default=_DEFAULT_INITIAL_CASH,
+                        help=f"Initial cash for backtesting. Default: {_DEFAULT_INITIAL_CASH}")
+    parser.add_argument('--commission', type=float, default=_DEFAULT_COMMISSION_RATE,
+                        help=f"Commission rate per trade. Default: {_DEFAULT_COMMISSION_RATE}")
+
+    # --- Strategy Parameter Arguments ---
+    parser.add_argument('--rsi-length', type=int, default=_DEFAULT_RSI_LENGTH,
+                        help=f"RSI period length. Default: {_DEFAULT_RSI_LENGTH}")
+    parser.add_argument('--atr-length', type=int, default=_DEFAULT_ATR_LENGTH,
+                        help=f"ATR period length. Default: {_DEFAULT_ATR_LENGTH}")
+    parser.add_argument('--atr-multiplier', type=float, default=_DEFAULT_ATR_MULTIPLIER,
+                        help=f"ATR multiplier for stop loss calculation (if used dynamically). Default: {_DEFAULT_ATR_MULTIPLIER}")
+    parser.add_argument('--profit-target', type=float, default=_DEFAULT_PROFIT_TARGET_PCT,
+                        help=f"Profit target percentage (e.g., 0.01 for 1%). Default: {_DEFAULT_PROFIT_TARGET_PCT}")
+    parser.add_argument('--stop-loss', type=float, default=_DEFAULT_STOP_LOSS_PCT,
+                        help=f"Stop loss percentage (e.g., 0.008 for 0.8%). Default: {_DEFAULT_STOP_LOSS_PCT}")
+    parser.add_argument('--swing-window', type=int, default=_DEFAULT_SWING_WINDOW,
+                        help=f"Window size for detecting local price/RSI extrema. Default: {_DEFAULT_SWING_WINDOW}")
+
+    args = parser.parse_args()
+
+    # Prepare strategy parameters dictionary
+    strategy_params = {
+        'rsi_length': args.rsi_length,
+        'atr_length': args.atr_length,
+        'atr_multiplier': args.atr_multiplier,
+        'profit_target_pct': args.profit_target,
+        'stop_loss_pct': args.stop_loss,
+        'swing_window': args.swing_window
+    }
+
+    # Find data files
+    data_files = find_data_files(args.data_dir, args.symbols, args.filename_pattern)
+    
+    if not data_files:
+        print("Exiting due to missing data files.")
+        return
+
+    all_stats = {}
+    # Run backtests for each found cryptocurrency
+    for symbol, data_file in data_files.items():
+        stats = run_backtest(symbol, 
+                             data_file, 
+                             args.results_dir, 
+                             args.initial_cash, 
+                             args.commission, 
+                             strategy_params)
+        if stats is not None:
+            all_stats[symbol] = stats
+
+    # Optional: Summarize results across all tested symbols
+    if all_stats:
+        print("\n--- Overall Summary ---")
+        summary_df = pd.DataFrame({
+            'Return [%]': {s: st['Return [%]'] for s, st in all_stats.items()},
+            'Win Rate [%]': {s: st['Win Rate [%]'] for s, st in all_stats.items()},
+            'Profit Factor': {s: st['Profit Factor'] for s, st in all_stats.items()},
+            '# Trades': {s: st['# Trades'] for s, st in all_stats.items()}
+        }).sort_values('Return [%]', ascending=False)
+        print(summary_df)
+        
+        # Save summary
+        summary_file = os.path.join(args.results_dir, "_combined_summary.txt")
+        summary_df.to_string(summary_file)
+        logging.info(f"Combined summary saved to {summary_file}")
+
+    print("\nAll backtests finished.")
 
 if __name__ == "__main__":
     main()

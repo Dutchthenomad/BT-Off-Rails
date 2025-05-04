@@ -1,0 +1,24 @@
+{
+  "name": "backtesting_v1",
+  "version": "1.0.0",
+  "description": "*This repository contains a collection of backtesting scripts and strategies, primarily developed for experimenting with the `backtesting.py` and `Freqtrade` platforms. While initially for personal exploration, these files are shared in the hope they might offer some value or starting points for those new to algorithmic crypto trading.*",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dutchthenomad/BT-Off-Rails.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Dutchthenomad/BT-Off-Rails/issues"
+  },
+  "homepage": "https://github.com/Dutchthenomad/BT-Off-Rails#readme",
+  "devDependencies": {
+    "prettier": "^3.5.3"
+  }
+}
